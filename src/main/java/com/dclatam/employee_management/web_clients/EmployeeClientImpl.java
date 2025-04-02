@@ -13,7 +13,6 @@ public class EmployeeClientImpl implements EmployeeClient {
     private final WebClient.Builder webClientBuilder;
     private static final String BASE_URL = "http://dummy.restapiexample.com/api/v1";
 
-    // Constructor manual
     public EmployeeClientImpl(WebClient.Builder webClientBuilder) {
         this.webClientBuilder = webClientBuilder;
     }
