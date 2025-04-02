@@ -7,7 +7,8 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor // 👈 Esto genera un constructor vacío
+@AllArgsConstructor
 public class EmployeeResponseDto {
 
     // Getter y Setter manuales para 'status'
@@ -22,11 +23,5 @@ public class EmployeeResponseDto {
     @JsonProperty("message")
     private String message;
 
-    // Constructor
-    public EmployeeResponseDto(String status, List<EmployeeDto> data, String message) {
-        this.status = status;
-        this.data = data;
-        this.message = message;
-    }
 
 }
