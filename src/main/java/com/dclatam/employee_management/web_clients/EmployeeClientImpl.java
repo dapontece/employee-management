@@ -6,40 +6,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Service
 public class EmployeeClientImpl implements EmployeeClient {
 
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
     private static final String BASE_URL = "http://dummy.restapiexample.com/api/v1";
 
+    // Constructor manual
     public EmployeeClientImpl(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(BASE_URL).build();
+        this.webClientBuilder = webClientBuilder;
     }
 
+    private WebClient getWebClient() {
+        return webClientBuilder.baseUrl(BASE_URL).build();
+    }
 
-    /**
-     * Obtiene la lista de empleados desde la API externa.
-     * @return Lista de EmployeeDto en un Mono.
-     */
     @Override
-    public Mono<List<EmployeeDto>> getAllEmployees() {
-        return webClient.get()
+    public Mono<EmployeeResponseDto> getAllEmployees() {
+        return getWebClient()
+                .get()
                 .uri("/employees")
                 .retrieve()
-                .bodyToMono(EmployeeResponseDto.class)
-                .map(EmployeeResponseDto::getData);
+                .bodyToMono(EmployeeResponseDto.class);
     }
 
-    /**
-     * Obtiene un empleado por ID desde la API externa.
-     * @param id ID del empleado.
-     * @return Mono con EmployeeDto.
-     */
     @Override
     public Mono<EmployeeDto> getEmployeeById(Integer id) {
-        return webClient.get()
+        return getWebClient()
+                .get()
                 .uri("/employee/{id}", id)
                 .retrieve()
                 .bodyToMono(EmployeeDto.class);
