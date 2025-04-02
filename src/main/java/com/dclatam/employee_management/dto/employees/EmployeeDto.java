@@ -20,7 +20,6 @@ public class EmployeeDto {
     @JsonProperty("employee_salary")
     private Double salary;
 
-    // Getter nuevo
     @JsonProperty("employee_anual_salary")
     private Double annualSalary;
 
