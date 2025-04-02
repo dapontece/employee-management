@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -19,18 +20,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.salaryCalculatorService = salaryCalculatorService;
     }
 
+
     @Override
     public Mono<List<EmployeeDto>> getAllEmployees() {
         return employeeClient.getAllEmployees()
-                .map(response -> response.getData());
+                .map(response -> response.getData().stream().map(employee -> {
+                    employee.setAnnualSalary(salaryCalculatorService.calculateAnnualSalary(employee.getSalary()));
+                    return employee;
+                }).collect(Collectors.toList()));
     }
+
 
     @Override
     public Mono<EmployeeDto> getEmployeeById(Integer id) {
-        return employeeClient.getEmployeeById(id);
-    }
-
-    public double calculateEmployeeAnnualSalary(EmployeeDto employee) {
-        return salaryCalculatorService.calculateAnnualSalary(employee.getSalary());
+        return employeeClient.getEmployeeById(id)
+                .map(employee -> {
+                    employee.setAnnualSalary(salaryCalculatorService.calculateAnnualSalary(employee.getSalary()));
+                    return employee;
+                });
     }
 }

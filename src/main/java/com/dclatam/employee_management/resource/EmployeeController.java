@@ -1,5 +1,6 @@
 package com.dclatam.employee_management.resource;
 
+import com.dclatam.employee_management.dto.EmployeeResponseDto;
 import com.dclatam.employee_management.dto.employees.EmployeeDto;
 import com.dclatam.employee_management.service.employee.EmployeeService;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +18,19 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    // Endpoint para obtener todos los empleados
     @GetMapping
-    public Mono<List<EmployeeDto>> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public Mono<EmployeeResponseDto> getAllEmployees() {
+        return employeeService.getAllEmployees()
+                .map(employees -> new EmployeeResponseDto("success", employees, "Employees retrieved successfully"));
     }
 
+    // Endpoint para obtener un empleado por ID
     @GetMapping("/{id}")
-    public Mono<EmployeeDto> getEmployeeById(@PathVariable Integer id) {
-        return employeeService.getEmployeeById(id);
+    public Mono<EmployeeResponseDto> getEmployeeById(@PathVariable Integer id) {
+        return employeeService.getEmployeeById(id)
+                .map(employee -> new EmployeeResponseDto("success", List.of(employee), "Employee retrieved successfully"));
     }
 
-    @GetMapping("/{id}/salary/annual")
-    public Mono<Double> getEmployeeAnnualSalary(@PathVariable Integer id) {
-        return employeeService.getEmployeeById(id)
-                .map(employee -> employeeService.calculateEmployeeAnnualSalary(employee));
-    }
 
 }

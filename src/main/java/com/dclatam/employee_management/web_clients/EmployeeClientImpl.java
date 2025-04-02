@@ -1,6 +1,7 @@
 package com.dclatam.employee_management.web_clients;
 
 import com.dclatam.employee_management.dto.EmployeeResponseDto;
+import com.dclatam.employee_management.dto.SingleEmployeeResponseDto;
 import com.dclatam.employee_management.dto.employees.EmployeeDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -36,6 +37,7 @@ public class EmployeeClientImpl implements EmployeeClient {
                 .get()
                 .uri("/employee/{id}", id)
                 .retrieve()
-                .bodyToMono(EmployeeDto.class);
+                .bodyToMono(SingleEmployeeResponseDto.class) // Mapear correctamente la estructura
+                .map(SingleEmployeeResponseDto::getData); // Extraer solo el objeto EmployeeDto
     }
 }

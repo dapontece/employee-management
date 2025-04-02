@@ -13,6 +13,9 @@ public class EmployeeDto {
     @JsonProperty("employee_salary")
     private Double salary;
 
+    @JsonProperty("employee_anual_salary")
+    private Double annualSalary;
+
     @JsonProperty("employee_age")
     private Integer age;
 
@@ -54,6 +57,15 @@ public class EmployeeDto {
         this.salary = salary;
     }
 
+    public Double getAnnualSalary() {
+        return annualSalary;
+    }  // Getter nuevo
+
+    public void setAnnualSalary(Double annualSalary) {
+        this.annualSalary = annualSalary;
+    } // Setter nuevo
+
+
     public Integer getAge() {
         return age;
     }
@@ -69,5 +81,6 @@ public class EmployeeDto {
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }
+
 
 }

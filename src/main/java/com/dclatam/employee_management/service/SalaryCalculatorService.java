@@ -5,7 +5,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SalaryCalculatorService {
 
-    public double calculateAnnualSalary(double monthlySalary) {
-        return monthlySalary * 12;
+    /**
+     * Calcula el salario anual de un empleado.
+     * Fórmula: salario mensual * 12
+     * @param monthlySalary Salario mensual del empleado.
+     * @return Salario anual calculado.
+     */
+    public Double calculateAnnualSalary(Double monthlySalary) {
+        return (monthlySalary != null) ? monthlySalary * 12 : null;
     }
 }

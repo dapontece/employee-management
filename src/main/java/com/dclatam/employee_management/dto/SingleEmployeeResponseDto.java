@@ -3,27 +3,25 @@ package com.dclatam.employee_management.dto;
 import com.dclatam.employee_management.dto.employees.EmployeeDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
-public class EmployeeResponseDto {
+public class SingleEmployeeResponseDto {
 
     @JsonProperty("status")
     private String status;
 
     @JsonProperty("data")
-    private List<EmployeeDto> data;
+    private EmployeeDto data;
 
     @JsonProperty("message")
     private String message;
 
     // Constructor
-    public EmployeeResponseDto(String status, List<EmployeeDto> data, String message) {
+    public SingleEmployeeResponseDto(String status, EmployeeDto data, String message) {
         this.status = status;
         this.data = data;
         this.message = message;
     }
 
-    // Getter y Setter manuales para 'status'
+    // Getters y Setters
     public String getStatus() {
         return status;
     }
@@ -32,16 +30,14 @@ public class EmployeeResponseDto {
         this.status = status;
     }
 
-    // Getter y Setter manuales para 'data'
-    public List<EmployeeDto> getData() {
+    public EmployeeDto getData() {
         return data;
     }
 
-    public void setData(List<EmployeeDto> data) {
+    public void setData(EmployeeDto data) {
         this.data = data;
     }
 
-    // Getter y Setter manuales para 'message'
     public String getMessage() {
         return message;
     }

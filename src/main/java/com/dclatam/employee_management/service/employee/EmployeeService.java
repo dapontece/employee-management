@@ -9,5 +9,4 @@ public interface EmployeeService {
     Mono<List<EmployeeDto>> getAllEmployees();
     Mono<EmployeeDto> getEmployeeById(Integer id);
 
-    double calculateEmployeeAnnualSalary(EmployeeDto employee);
 }
