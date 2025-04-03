@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees - Employee Management</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <style>
+        .navbar {
+            padding: 2rem 1rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .navbar-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .table tbody {
+            background-color: #f8f9fa;
+        }
+
+        .reload-btn {
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Menú -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="/assets/logo.jpg" alt="Logo" width="150" height="150">
+        </a>
+        <span class="navbar-text mx-auto">
+            <i class="bi bi-gear-fill"></i> Employee Management
+        </span>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="employees.html">Employees</a></li>
+                <li class="nav-item"><a class="nav-link" href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Contenido -->
+<div class="container">
+    <h2 class="text-center mb-4"><i class="bi bi-person-lines-fill"></i> Employee Management</h2>
+
+    <div class="d-flex justify-content-center mb-3">
+        <input type="text" id="employeeId" class="form-control w-25" placeholder="Employee ID">
+        <button class="btn btn-primary ms-2" onclick="fetchEmployees()">Search</button>
+        <button class="btn btn-secondary reload-btn" onclick="fetchEmployees()">
+            <i class="bi bi-arrow-clockwise"></i> Reload List
+        </button>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Annual Salary</th>
+            <th>Age</th>
+            <th>Profile Image</th>
+        </tr>
+        </thead>
+        <tbody id="employeeTable">
+        <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function fetchEmployees() {
+        const employeeId = document.getElementById("employeeId").value.trim();
+        const baseUrl = "/api/employee-management/employees";
+        const url = employeeId ? `${baseUrl}/${employeeId}` : baseUrl;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (response.ok) {
+                const employees = Array.isArray(data.data) ? data.data : [data.data];
+                const table = document.getElementById("employeeTable");
+                table.innerHTML = "";
+
+                employees.forEach(emp => {
+                    const row = `
+                        <tr>
+                            <td>${emp.id}</td>
+                            <td>${emp.employee_name}</td>
+                            <td>${emp.employee_salary}</td>
+                            <td>${emp.employee_anual_salary}</td>
+                            <td>${emp.employee_age}</td>
+                            <td>
+                                ${emp.profile_image
+                        ? `<img src="${emp.profile_image}" alt="Profile Image" width="50" height="50">`
+                        : "No Image"}
+                            </td>
+                        </tr>
+                    `;
+                    table.innerHTML += row;
+                });
+            } else {
+                alert("Error: " + data.message);
+            }
+        } catch (error) {
+            console.error("Error fetching employees:", error);
+            alert("Failed to load employees.");
+        }
+    }
+
+    // Evento para detectar cuando el campo está vacío y recargar la lista
+    document.getElementById("employeeId").addEventListener("input", function() {
+        if (this.value.trim() === "") {
+            fetchEmployees();
+        }
+    });
+
+    // Cargar empleados al inicio
+    document.addEventListener("DOMContentLoaded", fetchEmployees);
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const savedColor = localStorage.getItem("bgColor") || "#ffffff";
+        document.body.style.backgroundColor = savedColor;
+    });
+</script>
+</body>
+</html>

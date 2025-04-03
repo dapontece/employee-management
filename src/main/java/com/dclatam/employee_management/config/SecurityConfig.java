@@ -26,6 +26,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                 .csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/index.html", "/employees.html", "/settings.html","/assets/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers(basePath + "/employees").permitAll()
                         .requestMatchers(basePath + "/employees/{id}").permitAll()
                         .anyRequest().authenticated()
