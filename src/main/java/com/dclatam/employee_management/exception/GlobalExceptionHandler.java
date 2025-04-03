@@ -9,6 +9,10 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Global exception handler for the application.
+ * Captures and manages different types of exceptions, providing appropriate responses to the client.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -42,7 +46,13 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    // Manejo de Too Many Requests (429)
+
+    /**
+     * Handles the "Too Many Requests" exception (HTTP 429 - Too Many Requests).
+     *
+     * @param ex Captured exception.
+     * @return A {@link ResponseEntity} with a 429 status code.
+     */
     @ExceptionHandler(WebClientResponseException.TooManyRequests.class)
     public ResponseEntity<Map<String, Object>> handleTooManyRequestsException(WebClientResponseException.TooManyRequests ex) {
         Map<String, Object> response = new HashMap<>();
@@ -52,6 +62,13 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.TOO_MANY_REQUESTS);
     }
+
+    /**
+     * Handles {@link RuntimeException} when an employee is not found.
+     *
+     * @param ex Captured exception.
+     * @return A {@link ResponseEntity} with a 404 (Not Found) status code if it is related to employees.
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleNotFoundException(RuntimeException ex) {
         if (ex.getMessage().contains("Employee with ID")) { // Verificamos si es un error de empleado no encontrado

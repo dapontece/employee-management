@@ -10,6 +10,7 @@ public class SalaryCalculatorService {
     /**
      * Calculates the annual salary of an employee.
      * Formula: monthly salary * 12
+     *
      * @param monthlySalary Employee's monthly salary.
      * @return Calculated annual salary or null if the input is invalid.
      */

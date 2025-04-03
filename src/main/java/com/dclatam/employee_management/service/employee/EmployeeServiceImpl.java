@@ -11,6 +11,10 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of the employee service.
+ * Handles business logic related to employees.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j

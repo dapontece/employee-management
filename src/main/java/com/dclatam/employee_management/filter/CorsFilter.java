@@ -9,6 +9,10 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 
+/**
+ * Custom CORS filter to allow cross-origin requests.
+ * This filter sets the necessary HTTP headers to enable CORS for all incoming requests.
+ */
 public class CorsFilter extends GenericFilterBean {
 
     @Override

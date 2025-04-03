@@ -8,6 +8,10 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+/**
+ * Controller for managing employees.
+ * Provides endpoints to retrieve employee information.
+ */
 @RestController
 @RequestMapping("${controller.base-path}/employees")
 @RequiredArgsConstructor

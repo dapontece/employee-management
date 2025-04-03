@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+/**
+ * Implementation of the WebClient client for communication with the employee service.
+ * This class is responsible for making HTTP calls to an external service to retrieve employee information.
+ */
 @Service
 public class EmployeeClientImpl implements EmployeeClient {
 
@@ -19,7 +23,11 @@ public class EmployeeClientImpl implements EmployeeClient {
                 .build();
     }
 
-
+    /**
+     * Retrieves the list of all employees by calling the remote endpoint "/employees".
+     *
+     * @return A {@link Mono} containing the response with the list of employees.
+     */
     @Override
     public Mono<EmployeeResponseDto> getAllEmployees() {
         return webClient
@@ -29,6 +37,12 @@ public class EmployeeClientImpl implements EmployeeClient {
                 .bodyToMono(EmployeeResponseDto.class);
     }
 
+    /**
+     * Retrieves employee information by its ID by calling the remote endpoint "/employee/{id}".
+     *
+     * @param id Employee ID to search for.
+     * @return A {@link Mono} with the employee's information or an error if not found.
+     */
     @Override
     public Mono<EmployeeDto> getEmployeeById(Integer id) {
         return webClient

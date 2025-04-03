@@ -6,7 +6,9 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 public interface EmployeeService {
+
     Mono<List<EmployeeDto>> getAllEmployees();
+
     Mono<EmployeeDto> getEmployeeById(Integer id);
 
 }
