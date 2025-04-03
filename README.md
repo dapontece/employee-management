@@ -1,4 +1,4 @@
-# Employee Management System
+# Sistema de Gestión de Empleados
 
 ## Descripción
 Este es un sistema de gestión de empleados desarrollado con **Spring Boot**. Permite realizar operaciones relacionadas con la administración de empleados como consulta y cálculo de salarios.
